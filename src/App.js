@@ -1,17 +1,24 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import data from './data.js';
-
+import Modal from './Components/Modal.js';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import About from './Components/About.js';
 function App() {
   let [shoes] = useState(data);
-
+  let navigate = useNavigate();
+  <Routes>
+    <Route path='/detail' element={<Modal />} />
+    <Route path='*' element={<div>없는페이지임</div>} />
+    <Route path='/about' element={<About />}>
+      <Route path='member' element={<div>멤버들</div>} />
+      <Route path='location' element={<div>회사위치</div>} />
+    </Route>{' '}
+  </Routes>;
   return (
     <div className='App'>
       <Navbar bg='dark' variant='dark'>
@@ -31,6 +38,17 @@ function App() {
           <Card shoes={shoes[2]} i={3} />
         </div>
       </div>
+      <Link to='/'>홈</Link>
+      <Link to='/detail'>상세페이지</Link>
+      <Link to='/about'>~에 대해</Link>
+
+      <button
+        onClick={() => {
+          navigate('/detail');
+        }}
+      >
+        이동버튼
+      </button>
     </div>
   );
 }
